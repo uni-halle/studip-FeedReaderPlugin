@@ -43,7 +43,7 @@ class FeedReader extends StudipPlugin implements HomepagePlugin, PortalPlugin
 
         parent::__construct();
 
-        if (Navigation::hasItem('/profile')) {
+        if (Navigation::hasItem('/profile') && $this->is_authorized()) {
             Navigation::addItem('/profile/feed_reader',
                                 new AutoNavigation('Feed Reader',
                                                    PluginEngine::getUrl($this, null, "")));
@@ -200,6 +200,8 @@ class FeedReader extends StudipPlugin implements HomepagePlugin, PortalPlugin
 
         # NON AJAX
         else {
+
+            Navigation::activateItem('/profile/feed_reader');
 
             if (is_null($feed))
                 $message = 'Newsfeed existiert nicht.';
